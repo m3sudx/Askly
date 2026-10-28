@@ -1,8 +1,8 @@
 import { Router } from "express";
+import documentRoutes from "../modules/document/document.route.js";
 
-const aipRouters= Router();
+const apiRouters = Router();
 
-// Register your API routes here
+apiRouters.use("/documents", documentRoutes);
 
-
-export default aipRouters;
+export default apiRouters;
