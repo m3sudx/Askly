@@ -1,0 +1,21 @@
+curl -X POST http://localhost:3001/api/documents \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tenantId": "d2830201-c9fc-4e64-9997-a23fa3cc0dc4",
+    "sourceType": "text",
+    "title": "Clinic information",
+    "content": "Selam Clinic is open Monday to Friday from 8am to 5pm, and on Saturdays from 8am to 1pm. We are closed on Sundays and public holidays. A general checkup costs 500 birr. We accept Nyala and Awash insurance."
+  }'
+
+
+
+curl -X POST http://localhost:3001/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"publicKey":"84e98724b6804cd99fee77a96bb16780","visitorId":"visitor-12345","message":"Do you sell shoes?"}'
+
+ 
+
+
+curl -X POST http://localhost:3001/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"publicKey":"84e98724b6804cd99fee77a96bb16780","visitorId":"visitor-12345","message":" ቅዳሜ ክፍት ናችሁ?"}'
