@@ -46,7 +46,8 @@ type NewMessage = {
   model?: string;
   promptTokens?: number | null;
   completionTokens?: number | null;
-  latencyMs?: number;
+  latencyMs?: number | null;
+  failed?: boolean;
 };
 
 export async function saveMessage(m: NewMessage): Promise<string> {

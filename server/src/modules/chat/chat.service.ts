@@ -26,7 +26,12 @@ const FALLBACK = {
   },
 };
 
-type Match = { id: string; document_id: string; content: string; score: number };
+type Match = {
+  id: string;
+  document_id: string;
+  content: string;
+  score: number;
+};
 type IndexedMatch = Match & { position: number }; // position = the [n] shown to the model
 
 type Source = {
@@ -67,7 +72,10 @@ function citedPositions(text: string, max: number): number[] {
   return Array.from(found);
 }
 
-async function findMatches(tenantId: string, question: string): Promise<IndexedMatch[]> {
+async function findMatches(
+  tenantId: string,
+  question: string,
+): Promise<IndexedMatch[]> {
   const embedding = await embedQuery(question);
 
   const { data, error } = await supabase.rpc("match_chunks", {
@@ -89,7 +97,8 @@ async function loadSources(used: IndexedMatch[]): Promise<Source[]> {
     .from("documents")
     .select("id, title, source_url")
     .in("id", documentIds);
-  if (error) console.error("[chat] could not load document info:", error.message);
+  if (error)
+    console.error("[chat] could not load document info:", error.message);
 
   const docs = new Map((data ?? []).map((d) => [d.id as string, d]));
 
@@ -101,14 +110,17 @@ async function loadSources(used: IndexedMatch[]): Promise<Source[]> {
   }));
 }
 
-export async function answerQuestion(tenant: Tenant, input: ChatInput): Promise<ChatResult> {
+export async function answerQuestion(
+  tenant: Tenant,
+  input: ChatInput,
+): Promise<ChatResult> {
   const started = Date.now();
   const lang = isAmharic(input.message) ? "am" : "en";
 
   const conversationId = await getOrCreateConversation(
     tenant.id,
     input.visitorId,
-    input.conversationId
+    input.conversationId,
   );
   const history = await getRecentMessages(conversationId); // read before saving the new message
 
@@ -129,7 +141,9 @@ export async function answerQuestion(tenant: Tenant, input: ChatInput): Promise<
   let modelFailed = false;
 
   if (matches.length > 0) {
-    const passages = matches.map((m) => `[${m.position}] ${m.content}`).join("\n\n");
+    const passages = matches
+      .map((m) => `[${m.position}] ${m.content}`)
+      .join("\n\n");
 
     try {
       const result = await generateAnswer(buildSystemPrompt(tenant.name), [
@@ -155,7 +169,11 @@ export async function answerQuestion(tenant: Tenant, input: ChatInput): Promise<
     }
   }
 
-  const answered = !modelFailed && matches.length > 0 && text !== "" && !text.includes(NO_ANSWER);
+  const answered =
+    !modelFailed &&
+    matches.length > 0 &&
+    text !== "" &&
+    !text.includes(NO_ANSWER);
 
   const answer = answered
     ? text
@@ -167,7 +185,10 @@ export async function answerQuestion(tenant: Tenant, input: ChatInput): Promise<
   let used: IndexedMatch[] = [];
   if (answered) {
     const cited = citedPositions(text, matches.length);
-    used = cited.length > 0 ? matches.filter((m) => cited.includes(m.position)) : matches;
+    used =
+      cited.length > 0
+        ? matches.filter((m) => cited.includes(m.position))
+        : matches;
   }
 
   const messageId = await saveMessage({
@@ -180,6 +201,7 @@ export async function answerQuestion(tenant: Tenant, input: ChatInput): Promise<
     promptTokens,
     completionTokens,
     latencyMs: Date.now() - started,
+    failed: modelFailed,
   });
 
   let sources: Source[] = [];
@@ -190,7 +212,7 @@ export async function answerQuestion(tenant: Tenant, input: ChatInput): Promise<
         chunk_id: m.id,
         rank: m.position,
         score: m.score,
-      }))
+      })),
     );
     if (error) console.error("[chat] could not save sources:", error.message);
 

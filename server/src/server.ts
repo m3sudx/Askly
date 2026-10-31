@@ -4,10 +4,13 @@ import cors from 'cors'
 import aipRouters from './routes/index.js'
 import notFound from './middleware/not-found.js'
 import errorHandler from './middleware/errorHandler.js'
+import path from "node:path";
 
 const app=express()
+app.set("trust proxy", 1);
 app.use(cors())
 app.use(express.json())
+app.use("/widget", express.static(path.resolve(process.cwd(), "../widget/public")));
 
 const PORT=process.env.PORT||3001
 

@@ -19,3 +19,61 @@ curl -X POST http://localhost:3001/api/chat \
 curl -X POST http://localhost:3001/api/chat \
   -H "Content-Type: application/json" \
   -d '{"publicKey":"84e98724b6804cd99fee77a96bb16780","visitorId":"visitor-12345","message":" ቅዳሜ ክፍት ናችሁ?"}'
+
+
+curl -s -X POST "https://rmkajaojozzttgrfvbxm.supabase.co/auth/v1/token?grant_type=password" \
+  -H "apikey: sb_publishable_2eMh8pcqKpdheRCZzBGhxQ_cEADI2mF" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"mesud3818@gmail.com","password":"mese6864!"}'
+
+
+  TOKEN="eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc4ODA2MWIwLWIzMWYtNGE2OS04NjJjLWI4ZjE4OGI1MGI1OCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Jta2FqYW9qb3p6dHRncmZ2YnhtLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI1MTJhM2VmOC0zNGVjLTQ4MGEtYTE1Yi0yMWY4N2EzMGUyMmQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkzNDQ4MjM4LCJpYXQiOjE3OTM0NDQ2MzgsImVtYWlsIjoibWVzdWQzODE4QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWxfdmVyaWZpZWQiOnRydWV9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzkzNDQ0NjM4fV0sInNlc3Npb25faWQiOiI4ZTQ2ZDVkMS1jYjliLTQzMGQtOTFiMC0yMDBhZDMyMjBkOGIiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.fnguriB0S35PKf56dbp1o9iOyMq_MrlWy8ktO5MFQ3fSrpANPeQ1eo_8-IGqRnJUEDBSw_pF_0Nbju89Z5CxUA"
+
+# 1. no token: expect 401
+curl -s http://localhost:3001/api/documents?tenantId=d2830201-c9fc-4e64-9997-a23fa3cc0dc4
+
+# 2. with token: expect your documents
+curl -s -H "Authorization: Bearer $TOKEN" "http://localhost:3001/api/documents?tenantId=d2830201-c9fc-4e64-9997-a23fa3cc0dc4"
+
+# 3. someone else's tenant id: expect 403
+curl -s -H "Authorization: Bearer $TOKEN" "http://localhost:3001/api/documents?tenantId=00000000-0000-4000-8000-000000000000"
+
+# 4. list your businesses: should show Selam Clinic
+curl -s -H "Authorization: Bearer $TOKEN" http://localhost:3001/api/tenants
+
+# 5. set the allowed domains for the widget
+curl -s -X PATCH http://localhost:3001/api/tenants/d2830201-c9fc-4e64-9997-a23fa3cc0dc4 \
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"allowedDomains":["example.com"]}'
+
+
+
+
+
+  curl -s -X PATCH http://localhost:3001/api/tenants/d2830201-c9fc-4e64-9997-a23fa3cc0dc4 \
+  -H "Authorization: Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc4ODA2MWIwLWIzMWYtNGE2OS04NjJjLWI4ZjE4OGI1MGI1OCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Jta2FqYW9qb3p6dHRncmZ2YnhtLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI1MTJhM2VmOC0zNGVjLTQ4MGEtYTE1Yi0yMWY4N2EzMGUyMmQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkzNDQ4MjM4LCJpYXQiOjE3OTM0NDQ2MzgsImVtYWlsIjoibWVzdWQzODE4QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWxfdmVyaWZpZWQiOnRydWV9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzkzNDQ0NjM4fV0sInNlc3Npb25faWQiOiI4ZTQ2ZDVkMS1jYjliLTQzMGQtOTFiMC0yMDBhZDMyMjBkOGIiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.fnguriB0S35PKf56dbp1o9iOyMq_MrlWy8ktO5MFQ3fSrpANPeQ1eo_8-IGqRnJUEDBSw_pF_0Nbju89Z5CxUA" -H "Content-Type: application/json" \
+  -d '{"allowedDomains":["localhost"]}'
+
+
+  TOKEN=$(curl -s -X POST "https://rmkajaojozzttgrfvbxm.supabase.co/auth/v1/token?grant_type=password" \
+  -H "apikey: sb_publishable_2eMh8pcqKpdheRCZzBGhxQ_cEADI2mF" -H "Content-Type: application/json" \
+  -d '{"email":"mesud3818@gmail.com","password":"mese6864!"}' | jq -r .access_token)
+
+echo ${#TOKEN}
+
+
+
+#!/usr/bin/env bash
+# Usage: source ~/get-token.sh
+EMAIL="mesud3818@gmail.com"
+PUBLISHABLE_KEY="sb_publishable_2eMh8pcqKpdheRCZzBGhxQ_cEADI2mF"
+SUPABASE_URL="https://rmkajaojozzttgrfvbxm.supabase.co"
+
+read -rsp "Password: " PW; echo
+TOKEN=$(curl -s -X POST "$SUPABASE_URL/auth/v1/token?grant_type=password" \
+  -H "apikey: $PUBLISHABLE_KEY" -H "Content-Type: application/json" \
+  -d "$(jq -n --arg e "$EMAIL" --arg p "$PW" '{email:$e,password:$p}')" | jq -r .access_token)
+unset PW
+
+echo "token length: ${#TOKEN}"
+export TOKEN

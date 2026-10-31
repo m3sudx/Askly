@@ -11,12 +11,15 @@ export async function generateAnswer(system: string, contents: Turn[]) {
   const res = await ai.models.generateContent({
     model: CHAT_MODEL,
     contents,
-    config: {
+       config: {
       systemInstruction: system,
       temperature: 0.2,
-      maxOutputTokens: 1024,
+      maxOutputTokens: 4096,
     },
   });
+    if (res.candidates?.[0]?.finishReason === "MAX_TOKENS") {
+    console.warn("[gemini] answer was cut off (MAX_TOKENS)");
+  }
 
   return {
     text: (res.text ?? "").trim(),
