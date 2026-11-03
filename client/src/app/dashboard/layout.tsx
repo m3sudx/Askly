@@ -1,8 +1,9 @@
 import { Suspense } from "react";
+import { PageLoading } from "@/components/spinner";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<p className="p-10 text-stone-600">Loading…</p>}>
+    <Suspense fallback={<PageLoading className="p-10" />}>
       {children}
     </Suspense>
   );

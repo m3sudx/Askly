@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { PageLoading } from "@/components/spinner";
 import { api } from "@/lib/api";
 import type { Doc } from "@/lib/types";
 
@@ -168,7 +169,7 @@ export default function DocumentsPage() {
         <h2 className="text-lg font-semibold text-stone-900">Your documents</h2>
 
         {listError && <p role="alert" className="mt-3 text-sm text-red-700">{listError}</p>}
-        {!listError && docs === null && <p className="mt-3 text-stone-600">Loading…</p>}
+        {!listError && docs === null && <PageLoading className="mt-3" />}
         {docs?.length === 0 && (
           <p className="mt-3 text-stone-600">No documents yet. Add your first one above.</p>
         )}

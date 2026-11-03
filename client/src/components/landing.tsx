@@ -62,7 +62,7 @@ const en = {
     text: "Create an assistant, add a page, and try it in a few minutes.",
     button: "Create your assistant",
   },
-  footer: { left: "Askly · Embeddable AI answers for any website", right: "Portfolio project, built by Mesud" },
+  footer: { left: "Askly · Embeddable AI answers for any website" },
 };
 
 type Copy = typeof en;

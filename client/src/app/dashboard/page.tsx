@@ -1,101 +1,73 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
-import { LANGUAGE_OPTIONS } from "@/lib/options";
-import { Select } from "@/components/select";
+import { PageLoading } from "@/components/spinner";
 import type { Tenant } from "@/lib/types";
 
-export default function NewBusinessPage() {
-  const router = useRouter();
-
-  const [name, setName] = useState("");
-  const [domains, setDomains] = useState("");
-  const [language, setLanguage] = useState<"en" | "am">("en");
+export default function DashboardPage() {
+  const [tenants, setTenants] = useState<Tenant[] | null>(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    const allowedDomains = domains
-      .split(",")
-      .map((d) => d.trim())
-      .filter(Boolean);
-
-    try {
-      await api<Tenant>("/api/tenants", {
-        method: "POST",
-        body: JSON.stringify({ name, allowedDomains, defaultLanguage: language }),
+  useEffect(() => {
+    let cancelled = false;
+    api<Tenant[]>("/api/tenants")
+      .then((data) => {
+        if (!cancelled) setTenants(data);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err instanceof Error ? err.message : "Could not load your businesses");
       });
-      router.push("/dashboard");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-      setLoading(false);
-    }
-  }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
-    <main className="mx-auto max-w-lg px-6 py-10">
-      <Link href="/dashboard" className="text-sm text-teal-700 hover:underline">
-        ← Back to businesses
-      </Link>
-      <h1 className="mt-4 text-3xl font-semibold text-stone-900">New business</h1>
-
-      <form onSubmit={handleSubmit} className="mt-8 rounded-2xl border border-stone-200 bg-white p-8">
-        <label htmlFor="name" className="block text-sm font-medium text-stone-700">
-          Business name
-        </label>
-        <input
-          id="name"
-          required
-          minLength={2}
-          maxLength={80}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2.5 outline-none focus:border-teal-700"
-        />
-
-        <label htmlFor="domains" className="mt-5 block text-sm font-medium text-stone-700">
-          Allowed websites
-        </label>
-        <input
-          id="domains"
-          value={domains}
-          onChange={(e) => setDomains(e.target.value)}
-          placeholder="example.com, shop.example.com"
-          className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2.5 outline-none focus:border-teal-700"
-        />
-        <p className="mt-1 text-sm text-stone-500">
-          Separate with commas, no https://. Use localhost while testing.
-        </p>
-
-        <label htmlFor="language" className="mt-5 block text-sm font-medium text-stone-700">
-          Default language
-        </label>
-        <div className="mt-1">
-          <Select
-            id="language"
-            value={language}
-            onChange={(v) => setLanguage(v as "en" | "am")}
-            options={LANGUAGE_OPTIONS}
-          />
-        </div>
-
-        {error && <p role="alert" className="mt-4 text-sm text-red-700">{error}</p>}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-6 w-full rounded-lg bg-teal-700 py-3 font-semibold text-white hover:bg-teal-800 disabled:opacity-60"
+    <main className="mx-auto max-w-3xl px-6 py-10">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h1 className="text-3xl font-semibold text-stone-900">Your businesses</h1>
+        <Link
+          href="/dashboard/new"
+          className="rounded-lg bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-800"
         >
-          {loading ? "Creating…" : "Create business"}
-        </button>
-      </form>
+          New business
+        </Link>
+      </div>
+
+      {error && (
+        <p role="alert" className="mt-6 text-sm text-red-700">
+          {error}
+        </p>
+      )}
+
+      {!error && tenants === null && <PageLoading />}
+
+      {tenants && tenants.length === 0 && (
+        <div className="mt-8 rounded-2xl border border-dashed border-stone-300 bg-white p-10 text-center">
+          <p className="text-stone-700">You have no businesses yet.</p>
+          <Link href="/dashboard/new" className="mt-3 inline-block text-sm font-medium text-teal-700 hover:underline">
+            Create your first one
+          </Link>
+        </div>
+      )}
+
+      {tenants && tenants.length > 0 && (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          {tenants.map((t) => (
+            <li key={t.id}>
+              <Link
+                href={`/dashboard/${t.id}`}
+                className="block rounded-2xl border border-stone-200 bg-white p-6 hover:border-teal-700"
+              >
+                <h2 className="text-lg font-semibold text-stone-900">{t.name}</h2>
+                <p className="mt-1 text-sm text-teal-700">Open dashboard →</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }

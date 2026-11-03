@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import type { Tenant } from "@/lib/types";
 
 export default function NewBusinessPage() {
-  const router = useRouter();
 
   const [name, setName] = useState("");
   const [domains, setDomains] = useState("");
@@ -30,7 +28,7 @@ export default function NewBusinessPage() {
         method: "POST",
         body: JSON.stringify({ name, allowedDomains, defaultLanguage: language }),
       });
-      router.push("/dashboard");
+      window.location.assign("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
       setLoading(false);
@@ -69,7 +67,7 @@ export default function NewBusinessPage() {
           className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2.5 outline-none focus:border-teal-700"
         />
         <p className="mt-1 text-sm text-stone-500">
-          Separate with commas, no https://. Use localhost while testing.
+          Separate with commas, no https://.
         </p>
 
         <label htmlFor="language" className="mt-5 block text-sm font-medium text-stone-700">

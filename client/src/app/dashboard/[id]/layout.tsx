@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { PageLoading } from "@/components/spinner";
 import { createClient } from "@/lib/supabase/client";
 import type { Tenant } from "@/lib/types";
 import { TenantContext } from "./tenant-context";
@@ -52,7 +53,11 @@ const nav = [
 
         <div className="rounded-lg border border-stone-200 bg-[#faf8f5] px-3 py-2.5">
           <p className="text-xs text-stone-500">Business</p>
-          <p className="font-medium text-stone-900">{tenant?.name ?? "Loading…"}</p>
+          {tenant ? (
+            <p className="font-medium text-stone-900">{tenant.name}</p>
+          ) : (
+            <PageLoading />
+          )}
         </div>
 
         <nav aria-label="Business">

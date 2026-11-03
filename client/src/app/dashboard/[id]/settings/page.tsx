@@ -4,6 +4,7 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { LANGUAGE_OPTIONS, POSITION_OPTIONS } from "@/lib/options";
 import { Select } from "@/components/select";
+import { PageLoading } from "@/components/spinner";
 import type { Tenant } from "@/lib/types";
 import { useTenant } from "../tenant-context";
 
@@ -22,7 +23,7 @@ function escapeAttr(value: string) {
 export default function SettingsPage() {
   const { tenant } = useTenant();
 
-  if (!tenant) return <p className="text-stone-600">Loading…</p>;
+  if (!tenant) return <PageLoading />;
 
   return (
     <div className="flex flex-col gap-6">
@@ -99,7 +100,7 @@ function DetailsForm({ tenant }: { tenant: Tenant }) {
         className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2.5 outline-none focus:border-teal-700"
       />
       <p className="mt-1 text-sm text-stone-500">
-        Only these websites can show your assistant. Separate with commas, no https://. Use localhost while testing.
+        Only these websites can show your assistant. Separate with commas, no https://.
       </p>
 
       <label htmlFor="biz-lang" className="mt-4 block text-sm font-medium text-stone-700">

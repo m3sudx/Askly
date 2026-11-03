@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { PageLoading } from "@/components/spinner";
 import { api } from "@/lib/api";
 import type { Stats } from "@/lib/types";
 
@@ -81,7 +82,7 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      {loading && <p className="text-stone-600">Loading…</p>}
+      {loading && <PageLoading />}
       {error && <p role="alert" className="text-red-700">{error}</p>}
 
       {stats && <Content stats={stats} days={days} />}
