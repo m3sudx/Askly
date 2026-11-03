@@ -70,8 +70,8 @@ type Copy = typeof en;
 const am: Copy = {
   nav: { how: "እንዴት ይሰራል", install: "መጫን", features: "ባህሪያት", login: "ግባ", start: "በነጻ ጀምር" },
   hero: {
-    badge: "AI የውይይት መሣሪያ · አማርኛ + እንግሊዝኛ",
-    title: "ከራስዎ ሰነዶች የሚመነጩ መልሶች፣ በድር ጣቢያዎ ላይ።",
+    badge: "AI ውይይት · አማርኛ + እንግሊዝኛ",
+    title: "ከራስዎ ሰነዶች የሚመነጩ መልሶች በድረ ገጽዎ ላይ",
     text: "አንድ መስመር ኮድ ብቻ ይጨምሩ። Askly ጎብኚዎችዎን በአማርኛ ወይም በእንግሊዝኛ ይመልሳል፣ ምንጮቹን ይጠቅሳል፣ ያልመለሰውንም ያሳዎታል።",
     primary: "ረዳትዎን ይፍጠሩ",
     secondary: "እንዴት እንደሚሰራ ይመልከቱ",
@@ -89,7 +89,7 @@ const am: Copy = {
   },
   install: {
     eyebrow: "መጫን",
-    title: "አንድ መስመር፣ ለማንኛውም ድር ጣቢያ",
+    title: "አንድ መስመር፣ ለማንኛውም ድረ ገጽ",
     text: "ኮዱን ከመዝጊያው body tag በፊት ይለጥፉት። መሣሪያው ራሱን በቻለ ሳጥን ውስጥ ስለሚሰራ የጣቢያዎ ስታይል አይሰብረውም፤ እሱም ጣቢያዎን አይሰብርም።",
     options: [
       { code: "data-lang", text: "የመስኮቱ ቋንቋ፡ አማርኛ ወይም እንግሊዝኛ" },
@@ -107,7 +107,7 @@ const am: Copy = {
       { title: "የማያውቀውን ያውቃል", body: "ሰነዶችዎ ጥያቄውን ካልሸፈኑ ከመገመት ይልቅ ይህንኑ ይናገራል፣ ጎብኚውንም ወደ እርስዎ ይመራል።" },
       { title: "ያልተመለሱ ጥያቄዎች ዝርዝር", body: "ጎብኚዎች የጠየቁትን ግን ገና ያላካተቱትን በትክክል ይመልከቱ፤ ይዘት በመጨመር ክፍተቱን ይሙሉ።" },
       { title: "አስተያየት እና ትንተና", body: "የአውራ ጣት ደረጃ፣ የምላሽ ፍጥነት፣ አጠቃቀም እና የቀን እንቅስቃሴ፣ ሁሉም ለባለቤቶች በተሰራ ዳሽቦርድ ውስጥ።" },
-      { title: "ደህንነቱ የተጠበቀ", body: "የተፈቀዱ ድር ጣቢያዎች ፍተሻ፣ የጥያቄ ገደብ፣ ለባለቤት ብቻ የሆነ ዳሽቦርድ፣ እና በይዘት ውስጥ የተደበቁ ትዕዛዞችን የማይከተል መመሪያ።" },
+      { title: "ደህንነቱ የተጠበቀ", body: "የተፈቀዱ ድረ ገጽዎች ፍተሻ፣ የጥያቄ ገደብ፣ ለባለቤት ብቻ የሆነ ዳሽቦርድ፣ እና በይዘት ውስጥ የተደበቁ ትዕዛዞችን የማይከተል መመሪያ።" },
     ],
   },
   cta: {
@@ -115,7 +115,7 @@ const am: Copy = {
     text: "ረዳት ይፍጠሩ፣ አንድ ገጽ ያክሉ፣ እና በደቂቃዎች ውስጥ ይሞክሩት።",
     button: "ረዳትዎን ይፍጠሩ",
   },
-  footer: { left: "Askly · ለማንኛውም ድር ጣቢያ የሚሆን ሊጫን የሚችል AI መልስ", right: "የፖርትፎሊዮ ፕሮጀክት፣ በመሱድ የተሰራ" },
+  footer: { left: "Askly · ለማንኛውም ድረ ገጽ የሚሆን ሊጫን የሚችል AI መልስ"},
 };
 
 const COPY: Record<Lang, Copy> = { en, am };
@@ -209,7 +209,7 @@ export function Landing() {
     <div lang={lang} className="bg-[#faf8f5] leading-normal text-stone-900">
       {/* HERO */}
       <div className="bg-[#0b1f1e] text-[#f4f1ec]">
-        <header className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4">
+        <header className="mx-auto flex max-w-300 flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4">
           <Link href="/" className="flex items-center gap-2.5 text-[22px] font-semibold tracking-tight text-[#f4f1ec]">
             <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
               <rect width="32" height="32" rx="9" fill="#2dd4bf" />
@@ -243,13 +243,13 @@ export function Landing() {
               </button>
             </div>
             <Link href="/login" className="px-2 py-2.5 text-[15px] font-medium text-[#f4f1ec]">{t.nav.login}</Link>
-            <Link href="/login" className="rounded-[10px] bg-[#2dd4bf] px-[18px] py-[11px] text-[15px] font-semibold text-[#0b1f1e]">
+            <Link href="/login" className="rounded-[10px] bg-[#2dd4bf] px-4.5 py-2.75 text-[15px] font-semibold text-[#0b1f1e]">
               {t.nav.start}
             </Link>
           </nav>
         </header>
 
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center gap-12 px-6 pb-22 pt-14">
+        <div className="mx-auto flex max-w-300 flex-wrap items-center gap-12 px-6 pb-22 pt-14">
           <div className="min-w-0 flex-[1_1_460px]">
             <span className="inline-block rounded-full border border-[#2c4a47] px-3 py-1.5 text-[13px] tracking-wide text-[#2dd4bf]">
               {t.hero.badge}
@@ -257,7 +257,7 @@ export function Landing() {
             <h1 className="font-display mt-5 text-[40px] font-medium leading-[1.12] tracking-tight sm:text-[56px]">
               {t.hero.title}
             </h1>
-            <p className="mt-5 max-w-[520px] text-[19px] leading-relaxed text-[#b6cdc9]">{t.hero.text}</p>
+            <p className="mt-5 max-w-130 text-[19px] leading-relaxed text-[#b6cdc9]">{t.hero.text}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/login" className="rounded-[10px] bg-[#2dd4bf] px-6 py-3.5 font-semibold text-[#0b1f1e]">
                 {t.hero.primary}
@@ -266,20 +266,20 @@ export function Landing() {
                 {t.hero.secondary}
               </a>
             </div>
-            {DEMO_KEY && <p className="mt-5 max-w-[520px] text-sm text-[#8fb0aa]">{t.hero.demoNote}</p>}
+            {DEMO_KEY && <p className="mt-5 max-w-130 text-sm text-[#8fb0aa]">{t.hero.demoNote}</p>}
           </div>
 
           <div className="flex min-w-0 flex-[1_1_380px] justify-center">
             <div
               role="img"
               aria-label="Example chat: a visitor asks if the clinic opens on Saturdays in English and in Amharic and gets cited answers"
-              className="w-full max-w-[400px] overflow-hidden rounded-2xl bg-white text-stone-900 shadow-[0_24px_60px_rgba(0,0,0,0.4)]"
+              className="w-full max-w-100 overflow-hidden rounded-2xl bg-white text-stone-900 shadow-[0_24px_60px_rgba(0,0,0,0.4)]"
             >
-              <div className="flex items-center justify-between bg-teal-700 px-[18px] py-3.5 font-semibold text-white">
+              <div className="flex items-center justify-between bg-teal-700 px-4.5 py-3.5 font-semibold text-white">
                 <span>Selam Clinic</span>
                 <span aria-hidden="true" className="text-xl leading-none">×</span>
               </div>
-              <div className="flex min-h-[280px] flex-col gap-2.5 bg-[#f6f7f8] p-4 text-sm">
+              <div className="flex min-h-70 flex-col gap-2.5 bg-[#f6f7f8] p-4 text-sm">
                 <div className="self-start rounded-xl rounded-bl bg-white px-3 py-2 border border-[#e3e5e8]">Hi! Ask me anything about us.</div>
                 <div className="self-end rounded-xl rounded-br bg-teal-700 px-3 py-2 text-white">Do you open on Saturdays?</div>
                 <div className="max-w-[88%] self-start rounded-xl rounded-bl border border-[#e3e5e8] bg-white px-3 py-2">
@@ -305,9 +305,9 @@ export function Landing() {
       </div>
 
       {/* HOW IT WORKS */}
-      <section id="how" className="mx-auto max-w-[1200px] px-6 pb-10 pt-22">
+      <section id="how" className="mx-auto max-w-300 px-6 pb-10 pt-22">
         <p className="text-[13px] font-semibold uppercase tracking-[0.08em] text-teal-700">{t.how.eyebrow}</p>
-        <h2 className="font-display mt-2.5 max-w-[640px] text-[32px] font-medium leading-tight tracking-tight sm:text-[40px]">
+        <h2 className="font-display mt-2.5 max-w-160 text-[32px] font-medium leading-tight tracking-tight sm:text-[40px]">
           {t.how.title}
         </h2>
         <div className="mt-10 flex flex-wrap gap-5">
@@ -322,7 +322,7 @@ export function Landing() {
       </section>
 
       {/* INSTALL */}
-      <section id="install" className="mx-auto flex max-w-[1200px] flex-wrap items-center gap-12 px-6 pb-10 pt-[72px]">
+      <section id="install" className="mx-auto flex max-w-300 flex-wrap items-center gap-12 px-6 pb-10 pt-18">
         <div className="min-w-0 flex-[1_1_400px]">
           <p className="text-[13px] font-semibold uppercase tracking-[0.08em] text-teal-700">{t.install.eyebrow}</p>
           <h2 className="font-display mt-2.5 text-[32px] font-medium leading-tight tracking-tight sm:text-[40px]">{t.install.title}</h2>
@@ -337,20 +337,20 @@ export function Landing() {
         </div>
         <div className="min-w-0 flex-[1_1_440px] rounded-[14px] bg-[#0b1f1e] p-6 shadow-[0_12px_32px_rgba(11,31,30,0.18)]">
           <div className="flex gap-1.5" aria-hidden="true">
-            <span className="inline-block size-[11px] rounded-full bg-[#3d5e5a]" />
-            <span className="inline-block size-[11px] rounded-full bg-[#3d5e5a]" />
-            <span className="inline-block size-[11px] rounded-full bg-[#3d5e5a]" />
+            <span className="inline-block size-2.75 rounded-full bg-[#3d5e5a]" />
+            <span className="inline-block size-2.75 rounded-full bg-[#3d5e5a]" />
+            <span className="inline-block size-2.75 rounded-full bg-[#3d5e5a]" />
           </div>
-          <pre className="mt-[18px] overflow-x-auto whitespace-pre-wrap break-words font-mono text-sm leading-[1.7] text-[#d6f5f0]">
+          <pre className="mt-4.5 overflow-x-auto whitespace-pre-wrap wrap-break-word font-mono text-sm leading-[1.7] text-[#d6f5f0]">
             {SNIPPET}
           </pre>
         </div>
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="mx-auto max-w-[1200px] px-6 pb-10 pt-[72px]">
+      <section id="features" className="mx-auto max-w-300 px-6 pb-10 pt-18">
         <p className="text-[13px] font-semibold uppercase tracking-[0.08em] text-teal-700">{t.features.eyebrow}</p>
-        <h2 className="font-display mt-2.5 max-w-[640px] text-[32px] font-medium leading-tight tracking-tight sm:text-[40px]">
+        <h2 className="font-display mt-2.5 max-w-160 text-[32px] font-medium leading-tight tracking-tight sm:text-[40px]">
           {t.features.title}
         </h2>
         <div className="mt-10 flex flex-wrap gap-5">
@@ -365,23 +365,22 @@ export function Landing() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto mt-[72px] max-w-[1200px] px-6">
+      <section className="mx-auto mt-18 max-w-300 px-6">
         <div className="flex flex-wrap items-center justify-between gap-6 rounded-[20px] bg-teal-700 px-10 py-14 text-white">
           <div className="min-w-0 flex-[1_1_360px]">
             <h2 className="font-display text-[30px] font-medium leading-tight tracking-tight sm:text-4xl">{t.cta.title}</h2>
             <p className="mt-3 text-[17px] text-teal-100">{t.cta.text}</p>
           </div>
-          <Link href="/login" className="rounded-[10px] bg-white px-[26px] py-3.5 font-semibold text-[#0b1f1e]">
+          <Link href="/login" className="rounded-[10px] bg-white px-6.5 py-3.5 font-semibold text-[#0b1f1e]">
             {t.cta.button}
           </Link>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="mt-[72px] bg-[#0b1f1e] text-[#a9c4c0]">
-        <div className="mx-auto flex max-w-[1200px] flex-wrap justify-between gap-3 px-6 py-8 text-sm">
+      <footer className="mt-18 bg-[#0b1f1e] text-[#a9c4c0]">
+        <div className="mx-auto flex max-w-300 flex-wrap justify-between gap-3 px-6 py-8 text-sm">
           <span>{t.footer.left}</span>
-          <span>{t.footer.right}</span>
         </div>
       </footer>
     </div>

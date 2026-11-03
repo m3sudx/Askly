@@ -77,3 +77,7 @@ unset PW
 
 echo "token length: ${#TOKEN}"
 export TOKEN
+
+
+
+SEED_OWNER_EMAIL=mesud3818@gmail.com npm run seed
