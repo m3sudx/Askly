@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
  "scripts": {
-  "build": "esbuild src/index.ts --bundle --minify --format=iife --target=es2019 --outfile=public/askly.js",
+  "build": "esbuild src/index.ts --bundle --minify --format=iife --target=es2019 --outfile=public/askly.js && mkdir -p ../server/public/widget && cp public/askly.js ../server/public/widget/askly.js",
   "dev": "esbuild src/index.ts --bundle --format=iife --target=es2019 --sourcemap --outfile=public/askly.js --watch",
   "typecheck": "tsc --noEmit"
 },
