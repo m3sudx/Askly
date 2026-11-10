@@ -16,7 +16,7 @@ const allowedOrigins = (process.env.CLIENT_ORIGINS ?? 'http://localhost:3000')
 
 // Paths that customers' websites call from any domain (the widget).
 // Your own allowed-domains check still protects the chat endpoint.
-const openPaths = ['/widget', '/api/chat']
+const openPaths = ['/widget', '/api/chat', '/api/feedback', '/api/health']
 
 const strictCors = cors({ origin: allowedOrigins, credentials: true })
 const openCors = cors()
