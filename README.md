@@ -225,7 +225,7 @@ After deploying, add the client's production URL to `CLIENT_ORIGINS` on the serv
 
 ## Author
 
-**Mesud Ali**, full-stack developer in Addis Ababa.
+**Mesud Ali**
 
 [GitHub](https://github.com/m3sudx)
 
